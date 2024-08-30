@@ -1,0 +1,12 @@
+First we broke the cipher text into sub-strings of 10 each. Then we stored the frequency of occurring of all the alphabets, using code, at the first position of all the sub-strings. Since e is the most frequent letter in english dictionary we assigned the alphabet having most frequency to be 'e'. For example : the most occurring alphabet at the first position of all the substrings, as can be seen in our code, was 'n'. Therefore, we considered it to be as 'e' in the plain text which implied that the first letter of the key should be such that the fifth cyclic right shift from such a letter must be 'n'. Therefore, the first letter of the key came out to be 'j'. Similarly we did for all the remaining 9 positions of the substrings and we got the key to be 'jpjyfurycx'. 
+Now we decrypted the cipher text with this key and got a string which looked somewhat sensible. 
+There was "br" in the plain text, with 'r' at 2nd position of the cipher text, which we got after decrypting the cipher text with the key which we got above. This should be "be". therefore 2nd letter of key should be "c"(from similar analysis used to find the previous key). After replacing the key we decrypted the cipher text using the new key. 
+Similarly we got many possible words such as 
+1 : "tle" which should be "the" therefore 10th letter (because 'l' in the cipher text occurred at position,say x, such that x modulo 10 was zero) of key should be "b".
+2 : "nebt" which should be "next" therefore 4th letter of key should be "c".
+3 : "wpeak" which should be "speak" therefore 7th letter of key should be "c".
+4 : "oj"  which should be "of" therefore 8th letter of key should be "c".
+5 : "nhamber" which should be "chamber" therefore 4th letter of key should be "c".'
+Above explanation is best explained by the code.
+Thus, we got the key to be 'jcjcffcccb' and the plaintext as : 
+Be wary of the next chamber, there is very little joy there. Speak out the password "the_cave_man_be_pleased" to go through. may you have the strength for the next chamber. To find the exit, you first will need to utter magic words there.

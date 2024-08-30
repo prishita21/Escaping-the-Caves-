@@ -1,0 +1,30 @@
+First we tried mono alphabetic substitution. By frequency analysis 'q' was the most frequent alphabet in the ciphertext(30 times). We substituted 'q' to 'e' but words didn't make sense. We tried the same with the 2nd most frequent letter 'v' and same followed. Thus we next tried polyalphabetic substitution. For this we tried to see the occurrences of certain digraphs and trigraphs but their frequencies were very low. Thus we next tried permutations.
+Judging by the sentence formation in the last lines, as there was a 8 letter word before what seemed to be the password we guessed it to be the word "password".  Then for block size for permutation we tried key length of 7 but "ss" of "password" came out to be mapped to different alphabets. Same happened for key length 6. Then we tried for key length 5 and we got same map for "ss". Similarly we guessed the word before "password" to be "the". There were also 2 two letter words and 1 seven letter word after the actual password. Judging by the previous ciphers and the nature of the game we guessed it to be " to go through".  Till now we have some of the mapping for the letter which have come twice or thrice in the blocks or have been unique in the two blocks. (cipher text - plaintext : 'l' - 's', 'f'-'h','h'-'p','d'-u','a'-t'). From this by arranging the block we found the permutation key could be of two types ( {1-4},{2-5},{4-1},{3-2},{5-3} or {1-5},{2-4},{4-1},{3-2},{5-3}). Then we guessed the word before "the" to be enter or speak as it was of 5 letter. as enter didn't match with the current mapping we went for speak.
+Then we went from the first block and decoded the whole ciphertext
+
+the plaintext can be seen by running the code submitted.
+the mapping is 
+if (cs[i] == 'm') ps[i] = 'k';     (cs = ciphertext , ps = plaintext)
+else if (cs[i]=='l') ps[i] = 's';
+        else if (cs[i]=='h') ps[i] = 'p';
+        else if (cs[i]=='f') ps[i] = 'h';
+        else if (cs[i]=='a') ps[i] = 't';
+        else if (cs[i]=='b') ps[i] = 'v';
+        else if (cs[i]=='v') ps[i] = 'e';
+        else if (cs[i]=='q') ps[i] = 'a';
+        else if (cs[i]=='w') ps[i] = 'o';
+        else if (cs[i]=='n') ps[i] = 'r';
+        else if (cs[i]=='r') ps[i] = 'w';
+        else if (cs[i]=='p') ps[i] = 'd';
+        else if (cs[i]=='s') ps[i] = 'f';
+        else if (cs[i]=='c') ps[i] = 'i';
+        else if (cs[i]=='j') ps[i] = 'b';
+        else if (cs[i]=='e') ps[i] = 'c';
+        else if (cs[i]=='y') ps[i] = 'n';
+        else if (cs[i]=='t') ps[i] = 'l';
+        else if (cs[i]=='x') ps[i] = 'y';
+        else if (cs[i]=='u') ps[i] = 'm';
+        else if (cs[i]=='d') ps[i] = 'u';
+        else if (cs[i]=='i') ps[i] = 'q';
+        else if (cs[i]=='g') ps[i] = 'g';
+       else if (cs[i]=='k') ps[i] = 'k';

@@ -1,0 +1,33 @@
+Cryptosystem used in this level is a variant of AES which includes two transformations.
+First a linear transformation given by invertible 8 x 8 key matrix A with elements from F_{128} and second an exponentiation given by 8 x 1 vector E whose elements are numbers between 1 and 126. These transformation were applied in the sequence EAEAE to the plaintext for encryption.
+we found out that the input was a block of size 8 bytes in form of 8*1 vector over F_{128}
+after entering enough inputs we found out that output contained 16 letters that are from "f" to "u". Then we generated inputs which consists of alphabets between "f" to "u" only, also only 16 letters could be represented by 4 bits and each alphabet was mapped with a number form 0 to 15 in binary number system.
+Also two alphabets together add to one byte. We tried various inputs by changing just one byte. As the input was of 8 bytes but these were from the field GF(128) so we could have inputs such as every byte varies from "ff" to "mu" (remaining all the bytes are "ff" ).
+We noticed that whenever we used inputs of the form 'gf' or 'hf' it produced same outputs as of inputs 'g' or 'h'. This implies that 'f' was used for padding.
+Using input_gen.cpp we generated various inputs in which only one byte differ and all other are same. We say this as the type C^(i-1)PC^(8-i) where i ranges from 1 to 8, and we noticed that after changing i^th byte of the input all bytes of output changes after i^th byte.
+This gave us the feeling that the transformation matrix used here is a lower triangular matrix.
+Then we used script.py to generate outputs in the file output.txt for corresponding inputs and then we used clean.cpp to clear the waste texts. Then we used group.cpp to group all the 1024 elements to 8 lines containing 128 elements each in the file output1.txt so that they match the format of inputs.txt .
+Then we used the program EAEAE.ipynb to perform the following transformations :
+1. Exponential has elements between 1 to 126 and Linear transformation matrix has elements from GF(128) which was observed to be lower triangular matrix.
+2. Due to input format as described above we used only one block (out of 8) to be non zero i.e., not "ff". 
+3. Since the Linear transformation matrix A = [Ai,j] is lower triangular so when we iterate over all possible values of this lower triangular matrix and exponent matrix E = E[i,0] over our input (say x is the value of non zero input block i ) we get output as Output = (Ai,i (Ai,i * x^(Ei))^(Ei))^(Ei)) .
+4. We then perform operation over our finite field of 128 with generator x^7 + x + 1 which will be used to carry operation throughout the code EAEAE.ipynb.
+5. Now, for each pair of plaintext- ciphertext we operated through all possible values Ei and Ai,i and compared the output. We found that there are 3 pairs per block which can be found in our code EAEAE.ipynb.
+6. By using more plaintext-ciphertext pairs (to eliminate wrong pairs and find out non-diagonal elements) and iterating them over above pairs and we found out the elements within 0 to 127 such that the equation Output holds. We do this in triangular fashion that is using Ai,i and Aj,j to find out Ai,j. Thus after this iteration we found every element next to each diagonal element. This also helped us to reduce possible pairs to one element each.
+7. Now, we found each element of this matrix by iterating over all possible values form 0 to 127 and checked its validity with function Output by using the Final values of Linear Transformation Matrix and above found values of Exponent Matrix.
+
+8. We found the Linear Transformation Matrix and Exponent Matrix as follows:
+
+ LINEAR_MATRIX =  [84    0   0     0    0    0    0   0]
+                  [124  70   0     0    0    0    0   0]
+                  [9    29   43    0    0    0    0   0]
+                  [102  21   1    12    0    0    0   0]
+                  [100  36   3   104  112    0    0   0] 
+                  [18   52   31   41  101   11    0   0]
+                  [22   119  19  100   25   93   27   0] 
+                  [65   8    80   25   10   73   24  38]
+
+
+EXPONENT_MATRIX = [18, 119, 41, 69, 89, 45, 25, 16]
+
+Using these matrices we decrypt the password. We did it in two halves as the encrypted password contained 32 letters ( ijmimhmqhhfqiigtkkftkfhfktlokmhp ) and then combined the decrypted halves. We found the password to be rxrkarrmdo000000 which did not work so we removed the zeroes and tried again which worked. Therefore the password is rxrkarrmdo

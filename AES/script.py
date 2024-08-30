@@ -1,0 +1,17 @@
+from string import ascii_lowercase
+print("dotpng")
+print("dotpngpyq")
+print("5")
+print("go")
+print("wave")
+print("dive")
+print("go")
+print("read")
+# print("password")
+# print("c")
+file = open("/home/eisemsi2/Documents/codes/inputs.txt",'r+')
+for i in range(0,1040):
+  print(file.readline())
+  print("c")
+print("back")
+print("exit")
